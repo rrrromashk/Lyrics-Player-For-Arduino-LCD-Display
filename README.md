@@ -1,30 +1,46 @@
 # Spotify Lyrics LCD
 
-Показывает синхронизированные тексты песен из Spotify на LCD-дисплее (через Arduino).
+Displays synced lyrics of the currently playing Spotify track on an LCD screen, via Arduino.
 
-## Как это работает
+## How it works
 
-- `Lyrics_led.py` — следит за текущим треком в Spotify, тянет синхронизированные тексты с [lrclib.net](https://lrclib.net) и отправляет текущую строку в Arduino по serial.
-- `arduino/sketch_aug20a.ino` — принимает строку по Serial и выводит её на LCD 16x2 (I2C), разбивая длинный текст на страницы.
-- `test.py` — простой скрипт для проверки serial-соединения с Arduino.
+- `Lyrics_led.py` — polls the currently playing Spotify track, fetches synced lyrics from [lrclib.net](https://lrclib.net), and sends the current line to the Arduino over serial.
+- `arduino/sketch_aug20a.ino` — receives a line over serial and displays it on a 16x2 I2C LCD, splitting longer text into pages.
+- `test.py` — a simple script to test the serial connection with the Arduino.
 
-## Установка
+## Hardware required
 
-1. Клонируйте репозиторий и установите зависимости:
+- Arduino Uno
+- LCD 1602 display with I2C module
+
+## Authorship
+
+- The Python code (`Lyrics_led.py`, `test.py`) was written by **Ramazan Sultan**.
+- The Arduino C++ code (`arduino/sketch_aug20a.ino`) was fully written by AI.
+
+## Setup
+
+1. Clone the repository and install dependencies:
    ```bash
    pip install -r requirements.txt
    ```
-2. Скопируйте `.env.example` в `.env` и впишите свои данные Spotify-приложения (создать на https://developer.spotify.com/dashboard):
+2. Copy `.env.example` to `.env` and fill in your Spotify app credentials (create one at https://developer.spotify.com/dashboard):
    ```bash
    cp .env.example .env
    ```
-3. Прошейте `arduino/sketch_aug20a.ino` в Arduino (нужна библиотека `LiquidCrystal_I2C`).
-4. Укажите правильный COM-порт в `Lyrics_led.py` (переменная `arduino = serial.Serial("COM5", 9600)`).
-5. Запустите:
+3. Flash `arduino/sketch_aug20a.ino` to the Arduino Uno (requires the `LiquidCrystal_I2C` library).
+4. Set the correct COM port in `Lyrics_led.py` (the `arduino = serial.Serial("COM5", 9600)` line).
+5. Run:
    ```bash
    python Lyrics_led.py
    ```
 
-## Важно
+## Important
 
-Файл `.env` содержит секретные ключи и **не должен попадать в git** — он уже добавлен в `.gitignore`.
+The `.env` file contains secret API keys and **must never be committed to git** — it's already covered by `.gitignore`.
+
+## License
+
+This project is licensed under the MIT License — see [LICENSE](LICENSE) for details.
+
+Copyright (c) 2026 Ramazan Sultan
